@@ -21,13 +21,29 @@ class _loginPageState extends State<loginPage> {
         });
   }
 
-  Widget googleloginButton() {
-    return ElevatedButton(
-        onPressed: this.click, child: Text("hello Login Plzz"));
+  Widget googleLoginButton() {
+    return OutlineButton(
+        onPressed: this.click,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(45)),
+        splashColor: Colors.grey,
+        borderSide: BorderSide(color: Colors.grey),
+        child: Padding(
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image(image: AssetImage('assets/google_logo.png'), height: 35),
+                Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text('Sign in with Google',
+                        style: TextStyle(color: Colors.grey, fontSize: 25)))
+              ],
+            )));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: googleloginButton());
+    return Align(alignment: Alignment.center, child: googleLoginButton());
   }
 }
