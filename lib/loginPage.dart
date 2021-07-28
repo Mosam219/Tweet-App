@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:tweetapp/HomePage.dart';
+import 'auth.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({Key? key}) : super(key: key);
@@ -10,32 +12,22 @@ class loginPage extends StatefulWidget {
 }
 
 class _loginPageState extends State<loginPage> {
-  String author = "";
-  TextEditingController controller = new TextEditingController();
+  late FirebaseUser user;
   void click() {
-    this.author = controller.text;
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => MyHome(this.author)));
+    signInWithGoogle().then((user) => {
+          this.user = user,
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => MyHome(user.displayName)))
+        });
+  }
+
+  Widget googleloginButton() {
+    return ElevatedButton(
+        onPressed: this.click, child: Text("hello Login Plzz"));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text("Login Page")),
-        body: Align(
-          alignment: Alignment.center,
-          child: Padding(
-            padding: EdgeInsets.all(50),
-            child: TextField(
-              controller: this.controller,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(width: 5, color: Colors.black)),
-                  labelText: "login",
-                  suffixIcon: IconButton(
-                      onPressed: this.click, icon: Icon(Icons.send))),
-            ),
-          ),
-        ));
+    return Scaffold(body: googleloginButton());
   }
 }
